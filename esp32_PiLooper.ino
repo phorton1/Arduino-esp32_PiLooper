@@ -1,14 +1,15 @@
 //-----------------------------------------------------
 // esp32_PiLooper.ino
 //-----------------------------------------------------
+// Based on teensyPiLooper, the ESP32 will allow me
+// to possibly implement a Wifi WebUI and/or telnet
+// interface to the TE3 foot pedal.
 
 #include <myDebug.h>
 #include "driver/uart.h"
 
-
 #define WITH_SERIAL1    	1
 #define WITH_SERIAL2    	0
-#define REVERSE_SERIALS		0
 
 #define WITH_MIDI			1
 #define DEBUG_MIDI			1
@@ -25,19 +26,10 @@
 // connected to flash".  I then tried GPIO12 and GPIO13 and
 // still had problems.  I finally decided to switch to 26 and 27.
 
-#if !REVERSE_SERIALS
-	#define SERIAL1_RX   26
-	#define SERIAL1_TX   27
-	#define SERIAL2_RX   16     // These ARE the default Serial2 pins
-	#define SERIAL2_TX   17     // They are untested at this time.
-
-#else	# reverse serial pins for early testing of serial2
-	#define SERIAL2_RX   26
-	#define SERIAL2_TX   27
-	#define SERIAL1_RX   16     // These ARE the default Serial2 pins
-	#define SERIAL1_TX   17     // They are untested at this time.
-#endif
-
+#define SERIAL1_RX   26
+#define SERIAL1_TX   27
+#define SERIAL2_RX   16     // These ARE the default Serial2 pins
+#define SERIAL2_TX   17     // They are untested at this time.
 
 #define SENSE_RPI_RUN       35      // sense rpi RUN (REBBOOT) pin, HIGH == rpi has voltage
 #define SENSE_RPI_READY     33      // sense rpi GPIO25, HIGH == my program has initialized
@@ -91,7 +83,7 @@ volatile uint32_t file_server_time;
 
 void rebootPi()
 {
-    display(0,"teensyPiLooper::rebootPi() called",0);
+    display(0,"esp32_PiLooper::rebootPi() called",0);
     digitalWrite(LED_RPI_RUN,0);
     digitalWrite(LED_RPI_READY,0);
     digitalWrite(PIN_PI_REBOOT,1);
