@@ -17,6 +17,9 @@
 
 #define ESP32_PI_LOOPER_VERSION  "v1.0"
 
+#define SERIAL0_BAUD_RATE		961200
+#define SERIAL1_BAUD_RATE		460800	// 115200
+#define SERIAL2_BAUD_RATE		115200
 
 //---------------
 // pins
@@ -397,16 +400,16 @@ static void initUart(uart_port_t uart_num, int baud, int pin_tx, int pin_rx)
 
 void setup()
 {
-	initUart(UART_NUM_0, 921600, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
+	initUart(UART_NUM_0, SERIAL0_BAUD_RATE, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
 	#if WITH_SERIAL1
-		initUart(UART_NUM_1, 115200, SERIAL1_TX, SERIAL1_RX);
+		initUart(UART_NUM_1, SERIAL1_BAUD_RATE, SERIAL1_TX, SERIAL1_RX);
 	#endif
 	#if WITH_SERIAL2
-		initUart(UART_NUM_2, 115200, SERIAL2_TX, SERIAL2_RX);
+		initUart(UART_NUM_2, SERIAL2_BAUD_RATE, SERIAL2_TX, SERIAL2_RX);
 	#endif
 
 	delay(500);
-	Serial.begin(921600);
+	Serial.begin(SERIAL0_BAUD_RATE);
 		// in keeping with ESP32 fast upload time and issues
 		// with being unable to reset to the serial port to
 		// 115200 after an upload
