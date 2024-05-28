@@ -124,11 +124,11 @@ static void uartTask0(void *param)
 			{
 				if (buf[0] == 0x2)
 					rebootPi();
-				else if (buf[0] == 0x1)
-				{
-					file_server_mode = !file_server_mode;
-					file_server_time = file_server_mode ? millis() : 0;
-				}
+				// else if (buf[0] == 0x1)
+				// {
+				// 	file_server_mode = !file_server_mode;
+				// 	file_server_time = file_server_mode ? millis() : 0;
+				// }
 			}
 			else
 			{
